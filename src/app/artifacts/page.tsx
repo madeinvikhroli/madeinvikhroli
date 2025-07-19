@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import ArtifactCard from "../ui/components/artifacts/ArtifactCard";
 import axios from "axios";
 import { usePathname } from "next/navigation";
+import cachedArtifacts from "@/db/artifacts.json";
 
 interface artifact {
   id: string;
@@ -31,6 +32,7 @@ export default function Page() {
         setArtifacts(res?.data?.artifacts);
       } catch (error) {
         console.error("Error fetching artifacts:", error);
+        setArtifacts(cachedArtifacts);
       }
     };
     fetchArtifacts();
