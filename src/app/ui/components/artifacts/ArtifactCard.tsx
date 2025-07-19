@@ -19,12 +19,18 @@ type ArtifactCardProps = {
 
 const ArtifactCard = ({ artifact }: { artifact: ArtifactCardProps }) => {
   const [openCheckoutPopup, setOpenCheckoutPopup] = useState(false);
+  console.log(
+    artifact?.image.replace("localhost:5000/uploads", "152.58.45.75")
+  );
 
   return (
     <div key={artifact?.id} className="flex flex-col md:max-w-[310]">
       <div className="aspect-square overflow-hidden relative w-full">
         <Image
-          src={artifact?.image.replace("localhost:5000", "152.58.45.75")}
+          src={artifact?.image.replace(
+            "localhost:5000/uploads",
+            "152.58.45.75"
+          )}
           fill={true}
           className="w-full object-contain aspect-square"
           alt=""
