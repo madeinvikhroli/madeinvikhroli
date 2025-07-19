@@ -12,11 +12,17 @@ const SECRET_KEY = process.env.NEXT_PUBLIC_LOCALSTORAGE_ENCRYPT_KEY;
 
 export const encryptData = (data: any) => {
   const stringData = JSON.stringify(data);
+  if (!SECRET_KEY) {
+    throw new Error("Encryption key is missing");
+  }
   return CryptoJS.AES.encrypt(stringData, SECRET_KEY).toString();
 };
 
 export const decryptData = (encryptedData: string) => {
   try {
+    if (!SECRET_KEY) {
+      throw new Error("Encryption key is missing");
+    }
     const bytes = CryptoJS.AES.decrypt(encryptedData, SECRET_KEY);
     const decrypted = bytes.toString(CryptoJS.enc.Utf8);
     return JSON.parse(decrypted);
