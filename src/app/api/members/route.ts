@@ -16,9 +16,6 @@ export async function GET() {
     if (!isSame) {
       const filePath = path.resolve(process.cwd(), "src/db/members.json");
       await fs.writeFile(filePath, JSON.stringify(members, null, 2));
-      console.log("✅ members.json updated with new data.");
-    } else {
-      console.log("✅ members.json unchanged — no update needed.");
     }
     return NextResponse.json({ members });
   } catch (error) {

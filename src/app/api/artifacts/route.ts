@@ -17,11 +17,7 @@ export async function GET() {
     if (!isSame) {
       const filePath = path.resolve(process.cwd(), "src/db/artifacts.json");
       await fs.writeFile(filePath, JSON.stringify(artifacts, null, 2));
-      console.log("✅ artifacts.json updated.");
-    } else {
-      console.log("✅ artifacts.json unchanged.");
     }
-
     return NextResponse.json({ artifacts });
   } catch (error) {
     console.error("Error fetching artifacts:", error);

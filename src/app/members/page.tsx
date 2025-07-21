@@ -20,17 +20,17 @@ const page = () => {
     const fetchMembers = async () => {
       try {
         const res = await axios.get("/api/members");
-        setMembers(res.data.members);
+        // setMembers(res.data.members);
+        setMembers(cachedMembers);
       } catch (error) {
         console.error("Error fetching members:", error);
-        setMembers(cachedMembers);
       }
     };
     fetchMembers();
   }, []);
 
   return (
-    <div className="min-h-screen grid grid-cols-1 sm:grid-cols-4 gap-[1px]">
+    <div className="min-h-screen grid grid-cols-1 sm:grid-cols-3 gap-[20px]">
       {Array.isArray(members) &&
         members?.length > 0 &&
         members?.map((member, index) => (

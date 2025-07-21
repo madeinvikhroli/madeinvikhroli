@@ -29,22 +29,23 @@ export default function Page() {
     const fetchArtifacts = async () => {
       try {
         const res = await axios.get("/api/artifacts");
-        setArtifacts(res?.data?.artifacts);
+        // setArtifacts(res?.data?.artifacts);
+        setArtifacts(cachedArtifacts);
       } catch (error) {
         console.error("Error fetching artifacts:", error);
-        setArtifacts(cachedArtifacts);
       }
     };
     fetchArtifacts();
   }, [pathname]);
 
+  useEffect(() => {
+    if (process.env.NEXT_PUBLIC_REDIRECT_TO_OLD === "true")
+      window.location.href = "https://madeinvikhroli-old.vercel.app";
+  }, []);
+
   return (
     <div
-      className={`w-full min-h-screen grid grid-cols-1 sm:grid-cols-${
-        artifacts?.length <= 4 && artifacts?.length !== 1
-          ? artifacts?.length
-          : 4
-      } gap-[1px]`}
+      className={`w-full min-h-screen grid grid-cols-1 sm:grid-cols-3 gap-[20px]`}
     >
       {Array.isArray(artifacts) &&
         artifacts?.length > 0 &&

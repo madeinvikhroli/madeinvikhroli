@@ -138,14 +138,12 @@ const CheckoutCard = ({
     if (!wrapper) return alert("QR code container not found");
 
     try {
-      // Convert to canvas
       const canvas = await html2canvas(wrapper, {
         backgroundColor: null,
         scale: 2,
         useCORS: true,
       });
 
-      // Convert canvas to blob
       const blob = await new Promise<Blob | null>((resolve) =>
         canvas.toBlob(resolve, "image/png")
       );
@@ -153,7 +151,6 @@ const CheckoutCard = ({
 
       const file = new File([blob], "upi-qr.png", { type: "image/png" });
 
-      // Check if share API is available
       if (navigator.canShare?.({ files: [file] })) {
         await navigator.share({
           title: "Pay via UPI",
@@ -161,22 +158,6 @@ const CheckoutCard = ({
           files: [file],
         });
       } else {
-        // Fallback: inject image to simulate "tap and hold"
-        const fallbackImg = document.createElement("img");
-        fallbackImg.src = URL.createObjectURL(blob);
-        fallbackImg.alt = "UPI QR";
-        fallbackImg.style.position = "fixed";
-        fallbackImg.style.top = "0";
-        fallbackImg.style.left = "0";
-        fallbackImg.style.width = "100%";
-        fallbackImg.style.zIndex = "9999";
-        fallbackImg.style.background = "#fff";
-
-        // Tap to remove fallback image
-        fallbackImg.onclick = () => fallbackImg.remove();
-
-        document.body.appendChild(fallbackImg);
-
         alert(
           "Sharing not supported. Tap and hold the image to save or share manually."
         );
@@ -250,13 +231,19 @@ const CheckoutCard = ({
                 alt="artifact image"
               />
             </div>
-            <button
-              type="button"
-              onClick={shareQRCodeImage}
-              className="w-full p-2 h-fit rounded-[8px] py-2 border-[1px] bg-black text-white font-medium cursor-pointer active:scale-99 text-[14px] md:hidden"
-            >
-              Share QR to UPI App
-            </button>
+            {navigator?.userAgent.includes("Chrome") ? (
+              <button
+                type="button"
+                onClick={shareQRCodeImage}
+                className="w-full p-2 h-fit rounded-[8px] py-2 border-[1px] bg-black text-white font-medium cursor-pointer active:scale-99 text-[14px] md:hidden"
+              >
+                Share QR to UPI App
+              </button>
+            ) : (
+              <p className="text-[12px] font-medium text-center md:hidden">
+                Tap and Hold QR Code to Share it to UPI App
+              </p>
+            )}
             <div className="w-full h-full md:h-auto md:min-w-[445px] flex flex-col gap-4">
               <div className="w-full flex flex-row gap-2">
                 <Image
@@ -266,14 +253,14 @@ const CheckoutCard = ({
                   className="object-contain"
                   alt="artifact image"
                 />
-                <div className="w-full flex flex-col gap-1">
-                  <div className="w-full flex flex-row justify-between items-baseline font-medium text-[16px]">
-                    <p className="text-[16px]">{artifact?.name}</p>
-                    <p>₹{artifact?.price}</p>
+                <div className="w-full flex flex-row justify-between items-center font-medium text-[16px]">
+                  <div className="w-full flex flex-col gap-1 ">
+                    <p>{artifact?.name}</p>
+                    <p className="text-[12px] text-[#808080]">
+                      by {artifact?.from_member?.ig_username}
+                    </p>
                   </div>
-                  <p className="text-[12px] text-[#808080]">
-                    by {artifact?.from_member?.ig_username}
-                  </p>
+                  <p className="text-nowrap text-[24px]">₹ {artifact?.price}</p>
                 </div>
               </div>
               <form

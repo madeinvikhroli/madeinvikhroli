@@ -9,25 +9,25 @@ const routesArray = [
     href: "/artifacts",
   },
   {
-    name: "Members",
-    href: "/members",
-  },
-  {
     name: "About Us",
     href: "/about-us",
+  },
+  {
+    name: "Members",
+    href: "/members",
   },
 ];
 
 const Footer = () => {
   return (
-    <div className="w-screen min-h-screen md:min-h-fit bg-black text-white flex flex-col gap-[24px]">
-      <div className="md:w-[1240px] mx-auto p-[24px]">
+    <div className="w-screen md:min-h-fit bg-black text-white flex flex-col gap-[24px]">
+      <div className="w-full md:w-[1240px] md:mx-auto p-4 md:p-[24px]">
         <div className="flex flex-col md:flex-row md:flex-nowrap gap-[24px]">
           <div className="md:w-[calc(50%-12px)] flex flex-col gap-[24px]">
             <Link href={"/policy"} className="font-medium text-[64px]">
-              Payment & Information Use Policy
+              MIVs Policy
             </Link>
-            <div className=" flex flex-row flex-nowrap gap-[24px]">
+            <div className=" flex flex-col md:flex-row md:flex-nowrap gap-[24px]">
               {routesArray.map((route, index) => (
                 <Link
                   key={index}
@@ -46,12 +46,12 @@ const Footer = () => {
               ig/@madeinvikhroli
             </a>
           </div>
-          <div className="w-full md:min-w-[calc(50%-12px)] relative">
+          <div className="relative order-[-1] md:order-1 w-full aspect-[4.6/1] md:min-w-[calc(50%-12px)] md:h-auto md:w-[400px]">
             <Link href={"/artifacts"}>
               <Image
                 src={mivNavLogo}
                 fill={true}
-                className="invert"
+                className="md:w-full invert object-contain"
                 alt="miv-logo"
               />
             </Link>

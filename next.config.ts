@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "madeinvikhroli.s3.ap-south-1.amazonaws.com",
+        hostname: "j32rk6nxjmjwddyw.public.blob.vercel-storage.com",
         pathname: "*/**",
       },
       {
@@ -24,7 +24,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "http",
-        hostname: "152.58.45.75",
+        hostname: "152.58.0.133",
         pathname: "*/**",
       },
     ],

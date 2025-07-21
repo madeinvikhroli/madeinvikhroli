@@ -22,25 +22,32 @@ const ArtifactCard = ({ artifact }: { artifact: ArtifactCardProps }) => {
   console.log(
     artifact?.image.replace("localhost:5000/uploads", "152.58.45.75")
   );
+  console.log(artifact?.image);
+  // http://localhost:5000/uploads/praxham/artifacts/artifactPhoto-1752806942214-225108308.jpg
+  // https://j32rk6nxjmjwddyw.public.blob.vercel-storage.com/artifacts/artifactPhoto-1752806942214-225108308.jpg
 
   return (
-    <div key={artifact?.id} className="flex flex-col md:max-w-[310]">
-      <div className="aspect-square overflow-hidden relative w-full">
+    <div
+      key={artifact?.id}
+      className="h-fit flex flex-col gap-2 p-2 bg-white drop-shadow-[0_0_2px_rgba(0,0,0,0.25)] rounded-[10px]"
+    >
+      <div className="aspect-square overflow-hidden relative w-full rounded-[10px]">
         <Image
           src={
             artifact?.image
               ? artifact?.image
               : artifact?.image.replace(
                   "localhost:5000/uploads",
-                  "152.58.45.75"
+                  "152.58.0.133"
                 )
           }
           fill={true}
           className="w-full object-contain aspect-square"
           alt=""
+          onLoad={(e) => console.log(e)}
         />
       </div>
-      <div className="flex flex-col gap-2 items-start p-2">
+      <div className="flex flex-col gap-2 items-start">
         <div className="w-full flex flex-col gap-1">
           <div className="w-full flex flex-row items-baseline justify-between text-[16px] font-medium">
             <h1 className="line-clamp-1 text-nowrap">{artifact?.name}</h1>
