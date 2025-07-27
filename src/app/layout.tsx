@@ -45,7 +45,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Made in Vikhroli",
     description: "An Art Collective",
-    images: ["/assets/og-cover.png"],
+    images: [
+      "https://ubkaudleykedlauhjmha.supabase.co/storage/v1/object/public/madeinvikhroli-storage/website-images/og-cover.png",
+    ],
   },
   icons: {
     icon: "/assets/favicon.ico",
