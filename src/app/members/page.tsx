@@ -8,22 +8,22 @@ import cachedMembers from "@/db/members.json";
 interface member {
   id: string;
   upi_id: string;
-  email_id: string;
+  email: string;
   ig_username: string;
   profile_image: string;
 }
 
-const page = () => {
+const Members = () => {
   const [members, setMembers] = useState<member[]>();
 
   useEffect(() => {
     const fetchMembers = async () => {
       try {
         const res = await axios.get("/api/members");
-        // setMembers(res.data.members);
-        setMembers(cachedMembers);
+        setMembers(res?.data?.members);
       } catch (error) {
         console.error("Error fetching members:", error);
+        setMembers(cachedMembers);
       }
     };
     fetchMembers();
@@ -40,4 +40,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Members;

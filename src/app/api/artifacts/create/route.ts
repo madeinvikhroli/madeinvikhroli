@@ -1,21 +1,84 @@
 import { prisma } from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
+import { supabaseServiceRole } from "../../supabase-service-role";
 
-export async function POST() {
-    try {
-        // const res = await prisma.artifacts.create({data: {
-        //     name: 'Vibrant Queen',
-        //     description: `Vibrant Queen celebrates the radiant spirit of motherhood. Captured on a Samsung A10s and artfully enhanced with Picsart, this striking portrait showcases a mother's innate vibrancy. The image masterfully balances raw authenticity with digital artistry, resulting in a visually captivating representation of maternal energy. available as .png`,
-        //     price: 199.00,
-        //     image: 'http://localhost:5000/uploads/praxham/artifacts/artifactPhoto-1752806942214-225108308.jpg',
-        // }});
-        // console.log(res);
-        // return NextResponse.json({artifacts});
-    }catch (error) {
-        console.error('Error fetching artifacts:', error);
-        return NextResponse.json(
-        { error: 'Failed to fetch artifacts' },
-        { status: 500 }
-        );
+export async function POST(resquest: Request) {
+  try {
+    const formData = await resquest.formData();
+    const name = formData.get("name") as string;
+    const description = formData.get("description") as string;
+    const price = formData.get("price") as string;
+    const imageFile = formData.get("image") as File | null;
+    const by_member = formData.get("by_member") as string;
+    const file_types = formData
+      .getAll("file_types")
+      .filter((value): value is string => typeof value === "string");
+
+    let url: string | null = null;
+    if (file_types.includes("url")) {
+      url = formData.get("url") as string;
     }
+
+    if (!name || !imageFile || !price || !by_member || !file_types) {
+      console.error("Missing required fields");
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 }
+      );
+    }
+
+    let imageUrl = "";
+
+    if (imageFile) {
+      const fileName = `artifact-images/${name
+        .toLocaleLowerCase()
+        .replace(/\s/g, "")}-${Date.now()}.png`;
+      const { error: uploadError } = await supabaseServiceRole.storage
+        .from("madeinvikhroli-storage")
+        .upload(fileName, imageFile, {
+          cacheControl: "3600",
+          upsert: true,
+        });
+      if (uploadError) {
+        console.error("Error uploading profile image:", uploadError);
+        return NextResponse.json(
+          { error: "Failed to upload profile image" },
+          { status: 500 }
+        );
+      }
+      const {
+        data: { publicUrl },
+      } = supabaseServiceRole.storage
+        .from("madeinvikhroli-storage")
+        .getPublicUrl(fileName);
+
+      imageUrl = publicUrl;
+    }
+
+    const res = await prisma.artifacts.create({
+      data: {
+        name,
+        description,
+        price,
+        image: imageUrl,
+        by_member,
+        file_types,
+        url,
+      },
+    });
+    console.log(res);
+    return NextResponse.json(
+      JSON.parse(
+        JSON.stringify(res, (_, v) =>
+          typeof v === "bigint" ? v.toString() : v
+        )
+      )
+    );
+  } catch (error) {
+    console.error("Error while creating artifacts:", error);
+    return NextResponse.json(
+      { error: "Failed to create artifacts" },
+      { status: 500 }
+    );
+  }
 }

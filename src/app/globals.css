@@ -15,4 +15,8 @@ body {
 
 #portal-root:empty {
   display: none;
-} 
+}
+
+.skiptranslate {
+  display: none !important;
+}

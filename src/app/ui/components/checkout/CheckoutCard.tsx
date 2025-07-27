@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { HtmlHTMLAttributes, useEffect, useState } from "react";
 import { useQRCode } from "next-qrcode";
 import mivSticker from "../../../../../public/assets/checkout/miv-sticker.svg";
 import axios from "axios";
@@ -7,6 +7,9 @@ import CryptoJS from "crypto-js";
 import Link from "next/link";
 import html2canvas from "html2canvas";
 import backIcon from "../../../../../public/assets/checkout/back.svg";
+import mivPlaceholder from "../../../../../public/assets/common/placeholder.svg";
+import { HtmlContext } from "next/dist/server/route-modules/pages/vendored/contexts/entrypoints";
+import { createPortal } from "react-dom";
 
 const SECRET_KEY = process.env.NEXT_PUBLIC_LOCALSTORAGE_ENCRYPT_KEY;
 
@@ -51,6 +54,12 @@ const CheckoutCard = ({
   });
   const [paymentVerified, setPaymentVerified] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
+  const [showMoreDesc, setShowMoreDesc] = useState(false);
+  const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setPortalRoot(document.getElementById("portal-root"));
+  }, []);
 
   const handleUserDetailsUpdate = (key: string, value: any) => {
     setUserDetails((prev) => ({
@@ -168,7 +177,12 @@ const CheckoutCard = ({
     }
   };
 
-  return (
+  const parsedFileType = (fileType: string) => {
+    return JSON.parse(fileType);
+  };
+
+  if (!portalRoot) return null;
+  return createPortal(
     <div className="fixed top-0 left-0 w-screen h-screen">
       <div
         onClick={() => setOpenCheckoutPopup(false)}
@@ -247,7 +261,7 @@ const CheckoutCard = ({
             <div className="w-full h-full md:h-auto md:min-w-[445px] flex flex-col gap-4">
               <div className="w-full flex flex-row gap-2">
                 <Image
-                  src={artifact?.image}
+                  src={artifact?.image ? artifact?.image : mivPlaceholder}
                   width={47}
                   height={47}
                   className="object-contain"
@@ -255,16 +269,45 @@ const CheckoutCard = ({
                 />
                 <div className="w-full flex flex-row justify-between items-center font-medium text-[16px]">
                   <div className="w-full flex flex-col gap-1 ">
-                    <p>{artifact?.name}</p>
+                    <div className="flex flex-row flex-wrap gap-2">
+                      <p>{artifact?.name}</p>
+                      <div className="flex flex-row flex-wrap gap-1">
+                        {parsedFileType(artifact?.file_types)?.map(
+                          (fileType: string) => (
+                            <p
+                              key={fileType}
+                              className="text-[12px] h-[20px] px-1 border-[1px] border-black rounded-[5px]"
+                            >
+                              {fileType}
+                            </p>
+                          )
+                        )}
+                      </div>
+                    </div>
                     <p className="text-[12px] text-[#808080]">
-                      by {artifact?.from_member?.ig_username}
+                      by {artifact?.by_member?.ig_username}
                     </p>
                   </div>
                   <p className="text-nowrap text-[24px]">₹ {artifact?.price}</p>
                 </div>
               </div>
+              <div className="inline text-[12px] font-medium">
+                <span
+                  className={`${
+                    showMoreDesc ? "line-clamp-none" : "line-clamp-3"
+                  }`}
+                >
+                  {artifact?.description}
+                </span>
+                <p
+                  onClick={() => setShowMoreDesc((prev) => !prev)}
+                  className="inline select-none cursor-pointer"
+                >
+                  {showMoreDesc ? "See Less" : "See More"}
+                </p>
+              </div>
               <form
-                onSubmit={(e) => e.preventDefault()}
+                onSubmit={handleCheckout}
                 className="h-full flex flex-col gap-2 text-[14px]"
               >
                 <div className="flex flex-col gap-1">
@@ -321,7 +364,7 @@ const CheckoutCard = ({
                     />
                   </div>
                 </div>
-                <div className="fixed bottom-4 w-[calc(100%-32px)] md:relative md:w-full flex flex-col md:flex-row gap-4 md:mt-auto">
+                <div className="w-[calc(100%-32px)] md:relative md:w-full flex flex-col md:flex-row gap-4 mt-auto">
                   <p className="md:w-[calc(50%-8px)] text-[12px] text-[#808080]">
                     by clicking “Connect with Seller” you agree to miv’s{" "}
                     <Link href={"/policy"} className="underline">
@@ -329,8 +372,7 @@ const CheckoutCard = ({
                     </Link>
                   </p>
                   <button
-                    type="button"
-                    onClick={() => handleCheckout()}
+                    type="submit"
                     className={`w-full md:w-[calc(50%-8px)] p-2 h-fit rounded-[8px] py-2 border-[1px] ${
                       paymentVerified
                         ? "bg-black cursor-pointer"
@@ -345,7 +387,8 @@ const CheckoutCard = ({
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    portalRoot
   );
 };
 

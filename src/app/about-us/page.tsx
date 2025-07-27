@@ -1,5 +1,5 @@
 "use client";
-export default function Page() {
+const AboutUs = () => {
   return (
     <div className="w-full font-[var(--font-modi)] flex flex-col items-center gap-2 md:mt-16">
       {Array.from({ length: 100 }).map((_, index) =>
@@ -23,4 +23,6 @@ export default function Page() {
       )}
     </div>
   );
-}
+};
+
+export default AboutUs;

@@ -1,12 +1,26 @@
 import { prisma } from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function POST(request: Request) {
   try {
-    const artifacts = await prisma.artifacts.findMany({
+    const { id } = await request.json();
+
+    if (!id) {
+      console.error("Missing required fields");
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 }
+      );
+    }
+
+    const res = await prisma.artifacts.findMany({
+      where: {
+        by_member: id,
+      },
       include: { members: true },
     });
-    const formattedArtifacts = artifacts.map((artifact) => {
+
+    const formattedArtifacts = res.map((artifact) => {
       const {
         members: { id, ig_username, email, upi_id, profile_image },
         ...rest
@@ -23,6 +37,7 @@ export async function GET() {
         },
       };
     });
+
     return NextResponse.json(
       JSON.parse(
         JSON.stringify(formattedArtifacts, (_, v) =>
@@ -31,10 +46,7 @@ export async function GET() {
       )
     );
   } catch (error) {
-    console.error("Error fetching artifacts:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch artifacts" },
-      { status: 500 }
-    );
+    console.error("No artifacts found:", error);
+    return NextResponse.json({ error: "No artifacts found" }, { status: 500 });
   }
 }

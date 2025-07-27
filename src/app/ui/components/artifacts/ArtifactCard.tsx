@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import CheckoutPortal from "@/app/CheckoutPortal";
+import mivPlaceholder from "../../../../../public/assets/common/placeholder.svg";
+import CheckoutCard from "../checkout/CheckoutCard";
 
 type ArtifactCardProps = {
   id: string;
@@ -9,7 +10,7 @@ type ArtifactCardProps = {
   description: string;
   price: string;
   created_at: string;
-  from_member: {
+  by_member: {
     id: string;
     upi_id: string;
     email_id: string;
@@ -19,13 +20,6 @@ type ArtifactCardProps = {
 
 const ArtifactCard = ({ artifact }: { artifact: ArtifactCardProps }) => {
   const [openCheckoutPopup, setOpenCheckoutPopup] = useState(false);
-  console.log(
-    artifact?.image.replace("localhost:5000/uploads", "152.58.45.75")
-  );
-  console.log(artifact?.image);
-  // http://localhost:5000/uploads/praxham/artifacts/artifactPhoto-1752806942214-225108308.jpg
-  // https://j32rk6nxjmjwddyw.public.blob.vercel-storage.com/artifacts/artifactPhoto-1752806942214-225108308.jpg
-
   return (
     <div
       key={artifact?.id}
@@ -33,18 +27,10 @@ const ArtifactCard = ({ artifact }: { artifact: ArtifactCardProps }) => {
     >
       <div className="aspect-square overflow-hidden relative w-full rounded-[10px]">
         <Image
-          src={
-            artifact?.image
-              ? artifact?.image
-              : artifact?.image.replace(
-                  "localhost:5000/uploads",
-                  "152.58.0.133"
-                )
-          }
+          src={artifact?.image ? artifact?.image : mivPlaceholder}
           fill={true}
           className="w-full object-contain aspect-square"
-          alt=""
-          onLoad={(e) => console.log(e)}
+          alt={artifact?.name + " image by " + artifact?.by_member?.ig_username}
         />
       </div>
       <div className="flex flex-col gap-2 items-start">
@@ -56,9 +42,9 @@ const ArtifactCard = ({ artifact }: { artifact: ArtifactCardProps }) => {
           <h2 className="text-[12px] text-[#808080] line-clamp-1 break-all">
             by{" "}
             <a
-              href={`https://instagram.com/${artifact?.from_member?.ig_username}`}
+              href={`https://instagram.com/${artifact?.by_member?.ig_username}`}
             >
-              @{artifact?.from_member?.ig_username}
+              @{artifact?.by_member?.ig_username}
             </a>
           </h2>
         </div>
@@ -70,7 +56,7 @@ const ArtifactCard = ({ artifact }: { artifact: ArtifactCardProps }) => {
         </button>
       </div>
       {openCheckoutPopup && (
-        <CheckoutPortal
+        <CheckoutCard
           setOpenCheckoutPopup={setOpenCheckoutPopup}
           artifact={artifact}
         />

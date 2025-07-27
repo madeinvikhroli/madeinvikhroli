@@ -13,7 +13,7 @@ interface artifact {
   description: string;
   price: string;
   created_at: string;
-  from_member: {
+  by_member: {
     id: string;
     upi_id: string;
     email_id: string;
@@ -21,7 +21,7 @@ interface artifact {
   };
 }
 
-export default function Page() {
+const Artifacts = () => {
   const pathname = usePathname();
   const [artifacts, setArtifacts] = useState<artifact[]>([]);
 
@@ -29,8 +29,8 @@ export default function Page() {
     const fetchArtifacts = async () => {
       try {
         const res = await axios.get("/api/artifacts");
-        // setArtifacts(res?.data?.artifacts);
-        setArtifacts(cachedArtifacts);
+        setArtifacts(res?.data);
+        console.log(res?.data);
       } catch (error) {
         console.error("Error fetching artifacts:", error);
       }
@@ -54,4 +54,6 @@ export default function Page() {
         ))}
     </div>
   );
-}
+};
+
+export default Artifacts;
