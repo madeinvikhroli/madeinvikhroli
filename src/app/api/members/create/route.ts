@@ -22,7 +22,6 @@ export async function POST(request: Request) {
       },
     });
 
-    console.log(res);
     return NextResponse.json({ res });
   } catch (error) {
     console.error("Error creating member:", error);

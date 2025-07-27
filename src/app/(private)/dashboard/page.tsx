@@ -82,7 +82,6 @@ const Dashboard = () => {
         id: userDetails?.id,
       });
       setArtifacts(res?.data);
-      console.log(res?.data);
     } catch (error) {}
   };
 
@@ -101,9 +100,7 @@ const Dashboard = () => {
       form.append("email", modifiedUserDetails?.email);
       form.append("upi_id", modifiedUserDetails?.upi_id);
       form.append("ig_username", modifiedUserDetails?.ig_username);
-      console.log(form);
       const res = await axios.post("/api/members/update", form);
-      console.log(res);
       if (res?.status === 200) {
         setArtifactCreated(true);
       }
@@ -126,9 +123,7 @@ const Dashboard = () => {
       newArtifactDetails?.file_types.includes("url") &&
         form.append("url", newArtifactDetails?.url);
       form.append("file_types", JSON.stringify(newArtifactDetails?.file_types));
-      console.log(form);
       const res = await axios.post("/api/artifacts/create", form);
-      console.log(res);
       if (res?.status === 200) {
         setArtifactCreated(true);
         setTimeout(() => {

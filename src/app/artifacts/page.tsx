@@ -30,7 +30,6 @@ const Artifacts = () => {
       try {
         const res = await axios.get("/api/artifacts");
         setArtifacts(res?.data);
-        console.log(res?.data);
       } catch (error) {
         console.error("Error fetching artifacts:", error);
       }

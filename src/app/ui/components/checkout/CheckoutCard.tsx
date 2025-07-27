@@ -69,11 +69,6 @@ const CheckoutCard = ({
   };
   const upiLinkMaker = () => {
     const secret = Math.floor(100000 + Math.random() * 900000);
-    console.log(
-      `upi://pay?pa=${artifact?.from_member?.upi_id}&am=${
-        artifact?.price
-      }&cu=INR&tn=${encodeURIComponent(secret)}`
-    );
     setUpiSecret(secret);
     return `upi://pay?pa=${artifact?.from_member?.upi_id}&am=${
       artifact?.price

@@ -18,8 +18,6 @@ export async function POST(request: Request) {
         user_id: id,
       },
     });
-
-    console.log(res);
     return NextResponse.json(res);
   } catch (error) {
     console.error("No member found:", error);

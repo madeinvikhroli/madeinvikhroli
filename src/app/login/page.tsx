@@ -35,7 +35,6 @@ const Login = () => {
       email: memberDetails.email,
       password: memberDetails.password,
     });
-    console.log(data, error);
     if (data?.user?.id) {
       router.push("/dashboard");
     }

@@ -76,7 +76,6 @@ const CreateArtifactForm = ({
     }
     const newFileTypes = [...newArtifactDetails.file_types, fileType];
     handleNewArtifactDetailsChange("file_types", newFileTypes);
-    console.log(newArtifactDetails.file_types);
   };
 
   useEffect(() => {

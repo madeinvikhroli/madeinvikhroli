@@ -66,7 +66,6 @@ export async function POST(resquest: Request) {
         url,
       },
     });
-    console.log(res);
     return NextResponse.json(
       JSON.parse(
         JSON.stringify(res, (_, v) =>

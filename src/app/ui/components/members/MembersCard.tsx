@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import { useQRCode } from "next-qrcode";
+import { useRouter } from "next/navigation";
 
 interface member {
   id: string;
@@ -12,9 +13,13 @@ interface member {
 
 const MembersCard = ({ member }: { member: member }) => {
   const { Image: QRImage } = useQRCode();
+  const router = useRouter();
 
   return (
-    <div className="relative h-[550px] flex flex-col rounded-[25px] overflow-clip text-white">
+    <div
+      onClick={() => router.push(`/${member?.ig_username}`)}
+      className="relative h-[550px] flex flex-col rounded-[25px] overflow-clip text-white cursor-pointer"
+    >
       <div className="w-full blur-xl scale-110 h-full bg-gradient-to-b from-[#FF0000] via-[#FFE040] to-blue-950" />
       <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] aspect-square overflow-hidden w-[200px] mx-auto">
         {member?.profile_image && (
@@ -29,6 +34,7 @@ const MembersCard = ({ member }: { member: member }) => {
       <div className="absolute left-[30px] bottom-[30px] w-[calc(100%-60px)] flex flex-row justify-between items-baseline">
         <a
           href={`https://instagram.com/${member?.ig_username}`}
+          onClick={(e) => e.stopPropagation()}
           target="_blank"
           className="line-clamp-1 text-nowrap text-[16px] font-medium"
         >

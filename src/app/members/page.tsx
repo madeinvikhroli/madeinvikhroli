@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import MembersCard from "../ui/components/members/MembersCard";
 import axios from "axios";
-import cachedMembers from "@/db/members.json";
 
 interface member {
   id: string;
@@ -23,7 +22,6 @@ const Members = () => {
         setMembers(res?.data?.members);
       } catch (error) {
         console.error("Error fetching members:", error);
-        setMembers(cachedMembers);
       }
     };
     fetchMembers();
