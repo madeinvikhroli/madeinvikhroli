@@ -234,7 +234,6 @@ const CheckoutCard = ({
                   }}
                 />
               )}
-              {upiLink}
               <Image
                 src={mivSticker}
                 className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-16 object-contain pointer-events-none"
