@@ -70,7 +70,7 @@ const CheckoutCard = ({
   const upiLinkMaker = () => {
     const secret = Math.floor(100000 + Math.random() * 900000);
     setUpiSecret(secret);
-    return `upi://pay?pa=${artifact?.from_member?.upi_id}&am=${
+    return `upi://pay?pa=${artifact?.by_member?.upi_id}&am=${
       artifact?.price
     }&cu=INR&tn=${encodeURIComponent(secret)}`;
   };
@@ -119,7 +119,7 @@ const CheckoutCard = ({
       const data = {
         buyerEmailID: userDetails.emailID,
         buyerUPIID: userDetails.upiID,
-        member: artifact?.from_member,
+        member: artifact?.by_member,
         artifact: artifact,
         secret: upiSecret,
       };
@@ -234,6 +234,7 @@ const CheckoutCard = ({
                   }}
                 />
               )}
+              {upiLink}
               <Image
                 src={mivSticker}
                 className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-16 object-contain pointer-events-none"
