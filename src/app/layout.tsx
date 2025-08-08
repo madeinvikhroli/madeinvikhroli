@@ -5,7 +5,6 @@ import Footer from "./ui/components/common/Footer";
 import { Noto_Sans_Modi, Poppins } from "next/font/google";
 import { AuthProvider } from "./ui/components/context/AuthProvider";
 import Script from "next/script";
-import { Head } from "next/document";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -32,8 +31,7 @@ export const metadata: Metadata = {
     siteName: "Made in Vikhroli",
     images: [
       {
-        url: "/og-cover.png", // make sure this is in /public
-        width: 1200,
+        url: "https://ubkaudleykedlauhjmha.supabase.co/storage/v1/object/public/madeinvikhroli-storage/website-images/og-cover.png",
         height: 630,
         alt: "Made in Vikhroli Open Graph Image",
       },

@@ -24,10 +24,18 @@ const Navbar = () => {
 
   return (
     <div className="w-full md:relative flex flex-row gap-4 items-center justify-between p-4 md:mt-[30px] text-[14px]">
+      <h1 className="fixed top-0 left-0 opacity-0 select-none pointer-events-none">
+        A Collective of Artists & Tech Innovators – Sharing Creative Projects &
+        Ideas
+      </h1>
+      <h2 className="fixed top-0 left-0 opacity-0 select-none pointer-events-none">
+        Based in Vikhroli, India, this community shares innovative art and tech
+        projects.
+      </h2>
+
       <Link href={"/artifacts"}>
         <Image src={mivNavLogo} alt="miv-logo" />
       </Link>
-
       <div
         onClick={() => setSidebarOpen(false)}
         className={`
