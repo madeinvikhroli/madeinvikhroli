@@ -2,6 +2,7 @@ import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import mivPlaceholder from "../../../../../public/assets/common/placeholder.svg";
+import { ChevronLeft } from "lucide-react";
 
 interface Artifact {
   name: string;
@@ -101,20 +102,31 @@ const CreateArtifactForm = ({
         onClick={() => setShowCreateArtifactForm(false)}
         className="fixed top-0 left-0 w-screen h-screen bg-black opacity-50"
       />
-      <div className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-screen h-screen md:h-fit md:w-fit md:min-w-[400px] bg-white p-4 md:rounded-[16px]">
+      <div className="fixed top-0 left-0 md:top-[50%] md:left-[50%] md:translate-x-[-50%] md:translate-y-[-50%] w-screen h-full md:h-fit md:w-fit md:min-w-[400px] bg-white p-4 md:rounded-[16px]">
         {artifactCreated ? (
           <div className="flex flex-col items-center gap-4 p-2 md:p-[24px]">
             <p className="text-[64px]">✅</p>
-            <div className="flex flex-col gap-2 font-medium text-[14px]">
+            <div
+              onClick={() => setShowCreateArtifactForm(false)}
+              className="flex flex-col gap-2 font-medium text-[14px]"
+            >
+              <ChevronLeft />
               <p>Artifact Created</p>
             </div>
           </div>
         ) : (
           <form
             onSubmit={createNewArtifact}
-            className="w-full flex flex-row gap-4"
+            className="w-full h-full flex flex-col md:flex-row gap-4 overflow-y-auto"
           >
-            <div className="relative w-[400px] max-h-[400px] aspect-square">
+            <div
+              onClick={() => setShowCreateArtifactForm(false)}
+              className="flex flex-row gap-1 items-center md:hidden"
+            >
+              <ChevronLeft size={20} />
+              <p className="font-semibold text-[14px]">Back</p>
+            </div>
+            <div className="relative w-full md:w-[400px] max-h-[400px] aspect-square">
               <Image
                 src={newArtifactDetails?.image || mivPlaceholder}
                 fill={true}
@@ -123,7 +135,7 @@ const CreateArtifactForm = ({
                 onClick={() =>
                   document.getElementById("artifact_image")?.click()
                 }
-                className="max-w-[400px] max-h-[400px] object-contain aspect-square rounded-[10px] border-[1px] border-[#4D4D4D] cursor-pointer"
+                className="md:max-w-[400px] max-h-[400px] object-contain aspect-square rounded-[10px] border-[1px] border-[#4D4D4D] cursor-pointer"
                 alt=""
               />
               {showImageAction && (
@@ -145,7 +157,7 @@ const CreateArtifactForm = ({
               type="file"
               className="hidden"
             />
-            <div className="flex flex-col gap-2 font-medium text-[14px]">
+            <div className="h-full md:h-auto flex flex-col gap-2 font-medium text-[14px]">
               <div className="flex flex-row gap-4">
                 <label className="w-full line-clamp-1 flex flex-col gap-2">
                   Name
@@ -179,7 +191,7 @@ const CreateArtifactForm = ({
                   />
                 </label>
               </div>
-              <label className="h-auot line-clamp-1 flex flex-col gap-2">
+              <label className="h-auto line-clamp-1 flex flex-col gap-2">
                 Description
                 <textarea
                   className="h-auto border-[1px] border-[#4D4D4D] rounded-[5px] px-2 py-1 font-normal active:outline-none focus:outline-none"

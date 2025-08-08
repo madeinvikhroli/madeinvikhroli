@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import mivPlaceholder from "../../../public/assets/common/placeholder.svg";
 import ArtifactCard from "../ui/components/artifacts/ArtifactCard";
 import { useQRCode } from "next-qrcode";
+import { Share2 } from "lucide-react";
 
 const Member = () => {
   const params = useParams();
@@ -75,28 +76,32 @@ const Member = () => {
   if (memberDetails) {
     return (
       <div className="min-h-screen flex flex-col gap-[24px]">
-        <div className="w-full flex flex-row gap-[24px]">
-          <div className="min-w-[200px] h-fit aspect-square">
+        <div className="w-full flex flex-row gap-4 md:gap-[24px]">
+          <div className="relative min-w-[64px] md:min-w-[200px] h-fit aspect-square">
             <Image
               src={memberDetails?.profile_image || mivPlaceholder}
-              width={200}
-              height={200}
-              className="object-contain aspect-square rounded-full"
+              fill={true}
+              className="w-full object-contain aspect-square rounded-full"
               alt=""
             />
           </div>
           <div className="flex flex-col gap-2">
-            <h1 className="text-[24px] font-medium">
+            <a
+              href={`https://instagram.com/${memberDetails?.ig_username}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[18px] md:text-[24px] font-medium line-clamp-1 cursor-pointer"
+            >
               {memberDetails?.ig_username && "@"}
               {memberDetails?.ig_username}
-            </h1>
-            <h2 className="text-[16px] text-[#4D4D4D] font-medium flex flex-row gap-2">
+            </a>
+            <h2 className="text-[14px] md:text-[16px] text-[#4D4D4D] font-medium flex flex-row gap-2 mr-8 md:mr-16">
               offers:
-              <span className="flex flex-row gap-1">
+              <span className="flex flex-row flex-wrap gap-1">
                 {memberOfferingsTypes?.map((type: string, index: number) => (
                   <span
                     key={index}
-                    className="border-[1px] border-[#4D4D4D] text-[#4D4D4D] rounded-[5px] px-1 text-[12px]"
+                    className="border-[1px] border-[#4D4D4D] text-[#4D4D4D] rounded-[5px] px-1 text-[12px] select-none"
                   >
                     {type}
                   </span>
@@ -104,7 +109,7 @@ const Member = () => {
               </span>
             </h2>
           </div>
-          <div className="w-[200px] relative ml-auto">
+          <div className="group w-[64px] md:w-[200px] relative ml-auto">
             <QRImage
               text={`upi://pay?pa=${memberDetails?.upi_id}&cu=INR`}
               options={{
@@ -116,13 +121,16 @@ const Member = () => {
                 width: 200,
               }}
             />
-            <button className="absolute top-[50%] left-[50%] translate-[-50%] text-nowrap h-fit bg-black text-white px-2 py-1 rounded-[5px] text-[12px] font-semibold">
+            <button className="hidden md:block absolute top-[50%] left-[50%] translate-[-50%] text-nowrap h-fit bg-black text-white px-2 py-1 rounded-[5px] text-[12px] font-semibold">
               donate
             </button>
+            <p className="hidden group-hover:block absolute -bottom-4 left-[50%] translate-x-[-50%] text-wrap text-[10px]">
+              Share to UPI app to Donate
+            </p>
           </div>
         </div>
-        <div className="flex flex-row items-center gap-4">
-          <h2 className="text-[24px] font-medium">Artifacts</h2>
+        <div className="flex flex-row items-center gap-2 md:gap-4">
+          <h2 className="text-[18px] md:text-[24px] font-medium">Artifacts</h2>
           <hr className="w-full bg-[#999999]" />
         </div>
         {artifacts ? (

@@ -48,12 +48,12 @@ const Login = () => {
 
   return (
     <div className="min-h-[calc(100vh-107px)] relative flex flex-col items-center justify-center text-[14px]">
-      <p className="place-self-top mt-16 mb-auto text-[100px] text-nowrap font-semibold">
+      <p className="place-self-top mt-16 mb-auto text-[42px] md:text-[100px] text-nowrap font-semibold">
         Login
       </p>
       <form
         onSubmit={login}
-        className="absolute top-[50%] left-[50%] translate-[-50%] min-w-[400px] flex flex-col gap-4 bg-white p-4 rounded-[10px] drop-shadow-[0_0_2px_rgba(0,0,0,0.25)]"
+        className="absolute top-[50%] left-[50%] translate-[-50%] min-w-[calc(100%-32px)] md:min-w-[400px] flex flex-col gap-4 bg-white p-4 rounded-[10px] drop-shadow-[0_0_2px_rgba(0,0,0,0.25)]"
       >
         <div className="flex flex-col gap-2">
           <label htmlFor="email" className="font-medium">

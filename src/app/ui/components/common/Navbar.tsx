@@ -7,6 +7,7 @@ import mivNavLogo from "../../../../../public/assets/navbar/miv-nav-logo.svg";
 import discord from "../../../../../public/assets/navbar/discord.svg";
 import Image from "next/image";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 const Navbar = () => {
   const pathname = usePathname();
   const [selectedTab, setSelectedTab] = useState<string>();
@@ -26,12 +27,7 @@ const Navbar = () => {
       <Link href={"/artifacts"}>
         <Image src={mivNavLogo} alt="miv-logo" />
       </Link>
-      <div
-        className="font-semibold select-none md:hidden"
-        onClick={() => setSidebarOpen(true)}
-      >
-        More
-      </div>
+
       <div
         onClick={() => setSidebarOpen(false)}
         className={`
@@ -41,15 +37,15 @@ const Navbar = () => {
     md:w-fit md:h-fit md:top-[50%] md:left-[50%] md:translate-[-50%]
     bg-black text-white select-none
     flex-col md:flex-row gap-[24px] md:items-center
-    px-4 pt-16 md:pt-3 md:px-4 py-[12px] md:rounded-[10px]
+    p-4 md:pt-3 md:px-4 md:rounded-[10px]
     font-semibold
   `}
       >
         <div
-          className="font-semibold mb-4 md:hidden"
+          className="font-semibold min-h-[68px] md:hidden"
           onClick={() => setSidebarOpen(false)}
         >
-          Back
+          <ChevronRight />
         </div>
         <Link
           href="/artifacts"
@@ -81,15 +77,13 @@ const Navbar = () => {
       </div>
 
       <div className="flex flex-row items gap-4">
-        <a
-          href="https://discord.gg/eKvZxeQRND"
-          target="_blank"
-          className="border-[#5865F2] text-[#5865F2] border-[2px] px-[12px] py-[6px] rounded-[50px] hidden lg:flex flex-row gap-2 items-center font-semibold"
-        >
-          Join Discord
-          <Image src={discord} width={20} height={16} alt="discord" />
-        </a>
         <LanguageSwitcher />
+      </div>
+      <div
+        className="font-semibold select-none md:hidden"
+        onClick={() => setSidebarOpen(true)}
+      >
+        <ChevronLeft />
       </div>
     </div>
   );

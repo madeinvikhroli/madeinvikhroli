@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import { useQRCode } from "next-qrcode";
 import { useRouter } from "next/navigation";
+import memberCardBg from "../../../../../public/assets/members/member-card-bg.png";
 
 interface member {
   id: string;
@@ -18,9 +19,15 @@ const MembersCard = ({ member }: { member: member }) => {
   return (
     <div
       onClick={() => router.push(`/${member?.ig_username}`)}
-      className="relative h-[550px] flex flex-col rounded-[25px] overflow-clip text-white cursor-pointer"
+      className="relative h-[550px] flex flex-col rounded-[50px] overflow-clip text-white cursor-pointer"
     >
-      <div className="w-full blur-xl scale-110 h-full bg-gradient-to-b from-[#FF0000] via-[#FFE040] to-blue-950" />
+      <div className="w-full h-full" />
+      <Image
+        src={memberCardBg}
+        fill={true}
+        className="w-full object-cover"
+        alt=""
+      />
       <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] aspect-square overflow-hidden w-[200px] mx-auto">
         {member?.profile_image && (
           <Image

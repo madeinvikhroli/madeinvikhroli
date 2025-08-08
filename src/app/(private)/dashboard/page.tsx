@@ -139,7 +139,7 @@ const Dashboard = () => {
     <div className="min-h-screen flex flex-col gap-8">
       <form
         onSubmit={handleMemberDetailsUpdate}
-        className="w-full flex flex-row gap-[24px]"
+        className="w-full flex flex-col items-center md:flex-row gap-4 md:gap-[24px]"
       >
         <div className="relative w-[200px] aspect-square">
           <Image
@@ -150,7 +150,7 @@ const Dashboard = () => {
           />
           <button
             onClick={() => document.getElementById("profile_image")?.click()}
-            className="absolute bottom-4 left-[50%] translate-x-[-50%] text-nowrap h-fit bg-black text-white px-2 py-1 rounded-[5px] text-[12px] font-semibold"
+            className="absolute bottom-4 left-[50%] translate-x-[-50%] text-nowrap h-fit bg-black text-white px-2 py-1 rounded-[5px] text-[10px] md:text-[12px] font-semibold"
           >
             Update Image
           </button>
@@ -161,10 +161,10 @@ const Dashboard = () => {
           type="file"
           className="hidden"
         />
-        <div className="flex flex-col gap-2 font-medium">
+        <div className="w-full flex flex-col gap-2 font-medium">
           <label
             className={`${
-              userDetailsEditable ? "text-[14px]" : "text-[24px]"
+              userDetailsEditable ? "text-[14px]" : "text-[18px] md:text-[24px]"
             } line-clamp-1 flex flex-col gap-2`}
           >
             {userDetailsEditable && "IG Username"}
@@ -186,7 +186,7 @@ const Dashboard = () => {
             className={`${
               userDetailsEditable
                 ? "text-[14px]"
-                : "text-[#4D4D4D] text-[16px] "
+                : "text-[#4D4D4D] text-[14px] md:text-[16px] "
             } line-clamp-1 flex flex-col gap-2`}
           >
             {userDetailsEditable && "Email"}
@@ -230,7 +230,7 @@ const Dashboard = () => {
           <button
             type="submit"
             key="save"
-            className="h-fit bg-black text-white px-4 py-1 rounded-[5px] text-[14px] font-semibold ml-auto"
+            className="w-full md:w-fit h-fit bg-black text-white px-4 py-1 rounded-[5px] text-[14px] font-semibold ml-auto"
           >
             Save
           </button>
@@ -239,7 +239,7 @@ const Dashboard = () => {
             type="button"
             key="edit"
             onClick={() => setUserDetailsEditable(true)}
-            className="h-fit bg-black text-white px-4 py-1 rounded-[5px] text-[14px] font-semibold ml-auto"
+            className="w-full md:w-fit h-fit bg-black text-white px-4 py-1 rounded-[5px] text-[14px] font-semibold md:ml-auto"
           >
             Edit
           </button>

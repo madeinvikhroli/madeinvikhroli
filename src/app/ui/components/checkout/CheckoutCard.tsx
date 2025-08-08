@@ -181,9 +181,9 @@ const CheckoutCard = ({
     <div className="fixed top-0 left-0 w-screen h-screen">
       <div
         onClick={() => setOpenCheckoutPopup(false)}
-        className="fixed top-0 left-0 w-screen h-screen bg-black opacity-50"
+        className="fixed top-0 left-0 w-screen h-screen bg-black opacity-50 "
       />
-      <div className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-screen h-screen md:h-fit md:w-fit bg-white md:rounded-[16px]">
+      <div className="fixed top-0 left-0 md:top-[50%] md:left-[50%] md:translate-x-[-50%] md:translate-y-[-50%] w-screen h-full overflow-y-auto md:h-fit md:w-fit bg-white md:rounded-[16px] z-50">
         {emailSent ? (
           <div className="flex flex-col items-center gap-4 p-2 md:p-[24px]">
             <p className="text-[64px]">✉️</p>
@@ -359,7 +359,7 @@ const CheckoutCard = ({
                     />
                   </div>
                 </div>
-                <div className="w-[calc(100%-32px)] md:relative md:w-full flex flex-col md:flex-row gap-4 mt-auto">
+                <div className="w-full md:relative md:w-full flex flex-col md:flex-row gap-4 mt-auto mb-2">
                   <p className="md:w-[calc(50%-8px)] text-[12px] text-[#808080]">
                     by clicking “Connect with Seller” you agree to miv’s{" "}
                     <Link href={"/policy"} className="underline">

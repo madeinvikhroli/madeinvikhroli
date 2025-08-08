@@ -98,8 +98,8 @@ export default function RootLayout({
             <Navbar />
             <div className="px-2 lg:px-0">{children}</div>
           </div>
-          <div id="portal-root" />
           <Footer />
+          <div id="portal-root" />
         </AuthProvider>
       </body>
     </html>

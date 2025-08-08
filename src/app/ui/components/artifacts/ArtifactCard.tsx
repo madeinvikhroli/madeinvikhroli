@@ -41,9 +41,7 @@ const ArtifactCard = ({ artifact }: { artifact: ArtifactCardProps }) => {
           </div>
           <h2 className="text-[12px] text-[#808080] line-clamp-1 break-all">
             by{" "}
-            <a
-              href={`https://instagram.com/${artifact?.by_member?.ig_username}`}
-            >
+            <a href={`/${artifact?.by_member?.ig_username}`}>
               @{artifact?.by_member?.ig_username}
             </a>
           </h2>
