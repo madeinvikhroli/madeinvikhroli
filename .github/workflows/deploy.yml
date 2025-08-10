@@ -39,7 +39,7 @@ jobs:
           echo "Testing SSH connection..."
           ssh -6 -vvv -o StrictHostKeyChecking=no -o ConnectTimeout=30 -i ~/.ssh/id_rsa ${{secrets.SSH_USERNAME}}@${{secrets.SSH_HOST}} "echo 'SSH connection successful'" || echo "SSH failed"
       - name: Copy over files to server
-        run: scp -6 -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r .next ${{secrets.SSH_USERNAME}}@$[{{secrets.SSH_HOST}}]:/home/pratham/codebases/miv-website
+        run: scp -6 -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r .next ${{secrets.SSH_USERNAME}}@[${{secrets.SSH_HOST}}]:/home/pratham/codebases/miv-website
       - name: Append environment variables to .env
         run: ssh -6 -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{secrets.SSH_USERNAME}}@${{secrets.SSH_HOST}} "echo -e '${{secrets.RUNTIME_ENV_VARS}}' >> /home/pratham/codebases/miv-website/.env"
       - name: Run deployment script
