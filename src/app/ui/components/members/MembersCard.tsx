@@ -26,7 +26,7 @@ const MembersCard = ({ member }: { member: member }) => {
         src={memberCardBg}
         fill={true}
         className="w-full object-cover"
-        alt=""
+        alt="member card background"
       />
       <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] aspect-square overflow-hidden w-[200px] mx-auto">
         {member?.profile_image && (
@@ -34,7 +34,9 @@ const MembersCard = ({ member }: { member: member }) => {
             src={member?.profile_image}
             fill={true}
             className="w-full object-contain aspect-square rounded-full"
-            alt=""
+            alt={`${member?.ig_username}'s profile image`}
+            placeholder="blur"
+            blurDataURL={member?.profile_image}
           />
         )}
       </div>

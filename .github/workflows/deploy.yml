@@ -1,0 +1,33 @@
+name: Deploy Website on MIVONE
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container:
+      image: node:20
+    steps:
+      - uses: actions/checkout@v3
+      - with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_LOCALSTORAGE_ENCRYPT_KEY: ${{secrets.NEXT_PUBLIC_LOCALSTORAGE_ENCRYPT_KEY}}
+          NEXT_PUBLIC_REDIRECT_TO_OLD: ${{secrets.NEXT_PUBLIC_REDIRECT_TO_OLD}}
+          NEXT_PUBLIC_SUPABASE_KEY: ${{secrets.NEXT_PUBLIC_SUPABASE_KEY}}
+          NEXT_PUBLIC_SUPABASE_URL: ${{secrets.NEXT_PUBLIC_SUPABASE_URL}}
+          NEXT_PUBLIC_ALLOWED_EMAILS: ${{secrets.NEXT_PUBLIC_ALLOWED_EMAILS}}
+      - name: get ssh key and set permissions
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{secrets.SSH_PRIVATE_KEY}}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+      - name: Append environment variables to .env
+        run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{secrets.SSH_USERNAME}}@${{secrets.SSH_HOST}} "echo -e '${{secrets.RUNTIME_ENV_VARS}}' >> /home/pratham/codebases/miv-website/.env"
+      - name: Copy over files to server
+        run: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r .next ${{secrets.SSH_USERNAME}}@${{secrets.SSH_HOST}}:/home/pratham/codebases/miv-website
+      - name: Run deployment script
+        run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{secrets.SSH_USERNAME}}@${{secrets.SSH_HOST}} "cd /home/pratham/codebases/miv-website && pm2 restart madeinvikhroli"

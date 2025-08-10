@@ -27,10 +27,12 @@ const ArtifactCard = ({ artifact }: { artifact: ArtifactCardProps }) => {
     >
       <div className="aspect-square overflow-hidden relative w-full rounded-[10px]">
         <Image
-          src={artifact?.image ? artifact?.image : mivPlaceholder}
+          src={artifact?.image}
           fill={true}
           className="w-full object-contain aspect-square"
           alt={artifact?.name + " image by " + artifact?.by_member?.ig_username}
+          placeholder="blur"
+          blurDataURL={artifact?.image}
         />
       </div>
       <div className="flex flex-col gap-2 items-start">
