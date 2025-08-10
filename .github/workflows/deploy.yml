@@ -11,8 +11,7 @@ jobs:
       image: node:20
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-      - with:
+        with:
           node-version: 20
       - run: npm ci
       - run: npm run build
