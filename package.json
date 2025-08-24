@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "prisma generate && next build",
-    "build_for_mivone": "if [ ! -f ./.env ]; then cp ~/envs/miv-prod-env/.env . ; fi && prisma generate && next build",
-    "start": "next start",
+    "start": "node .next/standalone/server.js",
     "lint": "next lint"
   },
   "dependencies": {
